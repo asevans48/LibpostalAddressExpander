@@ -1,5 +1,11 @@
 
-# Project Title Here
+# LibPostal Address Expander
+
+A Pentaho PDI plugin for expanding (normalising) addresses via libpostal
+
+As a caveat, this tool may create a slight memory leak in Spoon but this was
+not found running pan or kitchen. Multiple steps of this type ran fan
+at least 10 times before my default 3gb.
 
 #### Pre-requisites for building the project:
 * Maven, version 3+

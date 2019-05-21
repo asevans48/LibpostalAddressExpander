@@ -105,7 +105,12 @@ public class LibpostalExpanderPluginData extends BaseStepData implements StepDat
     for(long i = 0; i < t_size; i ++){
       results[(int) i] = result.getString(i);
     }
+    address.deallocate();
+    szptr.deallocate();
     result.close();
+    address = null;
+    szptr = null;
+    result = null;
     return results;
   }
 
@@ -118,6 +123,10 @@ public class LibpostalExpanderPluginData extends BaseStepData implements StepDat
     }
     if(setup2) {
       libpostal_teardown_language_classifier();
+    }
+    if(options != null){
+      options.deallocate();
+      options = null;
     }
     setup1 = false;
     setup2 = false;
