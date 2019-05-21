@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:pen="http://www.pentaho.com/xml/schemas/pentaho-blueprint"
+           xsi:schemaLocation="
+             http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+             http://www.pentaho.com/xml/schemas/pentaho-blueprint http://www.pentaho.com/xml/schemas/pentaho-blueprint.xsd">
+
+    <bean id="JPostalPluginMeta" class="com.si.JPostalPluginMeta" scope="prototype"/>
+    <bean id="JPostalPluginPlugin" class="org.pentaho.di.osgi.OSGIPlugin" scope="prototype">
+        <property name="mainType" value="org.pentaho.di.trans.step.StepMetaInterface"/>
+        <property name="name" value="Extract Address"/>
+        <property name="ID" value="JPostalPlugin"/>
+        <property name="imageFile" value="JPostalPlugin.svg"/>
+        <property name="description" value="Extracts an address from the string."/>
+        <property name="pluginTypeInterface" value="org.pentaho.di.core.plugins.StepPluginType"/>
+        <property name="category" value="Transform"/>
+        <property name="classToBeanMap">
+            <map>
+                <entry key="org.pentaho.di.trans.step.StepMetaInterface" value="JPostalPluginMeta"/>
+            </map>
+        </property>
+    </bean>
+    <service id="JPostalPluginPluginService" interface="org.pentaho.di.core.plugins.PluginInterface" ref="JPostalPluginPlugin">
+        <service-properties>
+            <entry key="PluginType" value="org.pentaho.di.core.plugins.StepPluginType"/>
+        </service-properties>
+    </service>
+  <!--<bean id="JPostalPluginData" class="com.si.JPostalPluginData" scope="prototype"/>
+
+  <bean id="JPostalPluginBean" class="com.si.JPostalPluginMeta" scope="prototype">
+    <pen:di-plugin type="org.pentaho.di.core.plugins.StepPluginType">
+    	<pen:di-plugin-mapping class="org.pentaho.di.trans.step.StepDataInterface" ref="JPostalPluginData"/>
+    </pen:di-plugin>
+  </bean>-->
+
+  <!-- Define a bean for our new step analyzer -->
+  <bean id="JPostalPluginStepAnalyzer" class="com.si.JPostalPluginStepAnalyzer" />
+
+  <!--
+    Define our analyzer as a service. This will allow it to be automatically added to the reference-list ultimately used
+    by the TransformationAnalyzer to determine if there is a custom analyzer for a particular BaseStepMeta impl
+    (JPostalPluginMeta in this case).
+  -->
+  <service id="JPostalPluginStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="JPostalPluginStepAnalyzer"/>
+
+</blueprint>
