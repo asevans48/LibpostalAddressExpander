@@ -85,7 +85,7 @@ public class LibpostalExpanderPluginData extends BaseStepData implements StepDat
    * @return Whether or not the parser was setup
    */
   public boolean isAddressParserSetup() {
-    return (setup1 && setup2);
+    return (setup1 && setup2 && options != null);
   }
 
 
@@ -107,7 +107,7 @@ public class LibpostalExpanderPluginData extends BaseStepData implements StepDat
     }
     address.deallocate();
     szptr.deallocate();
-    result.close();
+    result.deallocate();
     address = null;
     szptr = null;
     result = null;
@@ -121,9 +121,11 @@ public class LibpostalExpanderPluginData extends BaseStepData implements StepDat
     if(setup1) {
       libpostal_teardown();
     }
+
     if(setup2) {
       libpostal_teardown_language_classifier();
     }
+
     if(options != null){
       options.deallocate();
       options = null;

@@ -96,10 +96,16 @@ public class LibpostalExpanderPlugin extends BaseStep implements StepInterface {
   }
 
   private void initAddressParser(){
+    logBasic(meta.getLpPath());
     boolean wasSetup = data.setupAddressParser(meta.getLpPath());
     if(!wasSetup){
       if(isBasic()){
-        logBasic("Failed to Initialize Address Parser");
+        logBasic("Failed to Initialize Address Expander");
+        if(meta.getLpPath() == null){
+          logBasic("Libpostal Path Null");
+        }else{
+          logBasic("Address Expander Not Initialized For Unknown Reason");
+        }
       }
       stopAll();
     }else{
@@ -226,7 +232,7 @@ public class LibpostalExpanderPlugin extends BaseStep implements StepInterface {
       if(meta.isNer() && !stringContainsLocation(extractText)){
         process = false;
       }
-      if(process){
+      if(process && extractText != null){
         orows = expandAddress(data.outputRowMeta, process, extractText, orow);
       }
     }
@@ -293,7 +299,6 @@ public class LibpostalExpanderPlugin extends BaseStep implements StepInterface {
       data.outputRowMeta = getInputRowMeta().clone();
       meta.getFields(data.outputRowMeta, getStepname(), null, null, this, null, null);
       getNewRowMeta(data.outputRowMeta, meta);
-      data.teardownAddressExpander();
       first = false;
     }
 

@@ -1,6 +1,6 @@
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0">
 
-  <feature name="jpostal-plugin-feature" version="1.0-SNAPSHOT">
+  <feature name="libpostal-expander-plugin-feature" version="1.0-SNAPSHOT">
     <bundle>mvn:com.si/jpostal-plugin/1.0-SNAPSHOT</bundle>
   </feature>
 
