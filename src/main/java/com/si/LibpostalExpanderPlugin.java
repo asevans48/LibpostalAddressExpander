@@ -226,8 +226,13 @@ public class LibpostalExpanderPlugin extends BaseStep implements StepInterface {
       if(meta.isNer() && !stringContainsLocation(extractText)){
         process = false;
       }
-      if(process){
+      if(process && extractText != null){
         orows = expandAddress(data.outputRowMeta, process, extractText, orow);
+      }else if(extractText != null){
+        if(isBasic()){
+          String msg = String.format("Text Address to Extract was Null [%s]", meta.getExpandInField());
+          logBasic(msg);
+        }
       }
     }
 
@@ -294,9 +299,9 @@ public class LibpostalExpanderPlugin extends BaseStep implements StepInterface {
       data.outputRowMeta = getInputRowMeta().clone();
       meta.getFields(data.outputRowMeta, getStepname(), null, null, this, null, null);
       getNewRowMeta(data.outputRowMeta, meta);
-      data.teardownAddressExpander();
       first = false;
     }
+
 
     Object[][] outRows = computeRowValues(data.outputRowMeta, r);
     if(outRows.length > 0) {
