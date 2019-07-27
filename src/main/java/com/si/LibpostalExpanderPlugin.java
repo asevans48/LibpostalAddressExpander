@@ -290,6 +290,7 @@ public class LibpostalExpanderPlugin extends BaseStep implements StepInterface {
     }
 
     if(first) {
+      data.setupAddressParser(meta.getLpPath());
       data.outputRowMeta = getInputRowMeta().clone();
       meta.getFields(data.outputRowMeta, getStepname(), null, null, this, null, null);
       getNewRowMeta(data.outputRowMeta, meta);
