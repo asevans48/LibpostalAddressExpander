@@ -44,7 +44,7 @@
     <guava.version>17.0</guava.version>
     <junit.version>4.4</junit.version>
     <guava.version>17.0</guava.version>
-    <dependency.corenlp.version>3.9.2</dependency.corenlp.version>
+    <dependency.corenlp.version>4.4.0</dependency.corenlp.version>
     <jpostal.jar>${user.home}/pdi-ce-8.2.0.0-342/data-integration/libext/jpostal.jar</jpostal.jar>
   </properties>
 
